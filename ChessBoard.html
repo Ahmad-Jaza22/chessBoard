@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chessBoard</title>
+    <script src="vue.global.js"></script>
+
+    <style>
+        .row {
+            height: 50px;
+        }
+        
+        .column {
+            width: 50px;
+            height: 50px;
+            float: left;
+        }
+        
+        .square {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+        }
+        
+        .white-sq {
+            background-color: white;
+            color: black;
+        }
+        
+        .black-sq {
+            color: white;
+            background-color: rgb(0, 0, 0);
+        }
+        
+        .files {
+            margin-top: 25px;
+            margin-right: 5px;
+            float: right;
+        }
+        
+        #board {
+            width: 500px;
+        }
+        
+        .sort {
+            margin-top: 1px;
+            margin-left: 5px;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="board">
+
+
+        <p v-if="number>0">the cell you clicked on is: {{number}}{{files[letter-1]}}</p>
+        <div class="row" v-for="col in cols">
+            <div class="column" v-for="row in rows">
+                <div v-if="(col+row)%2==0" class="square white-sq" v-bind:style="{ backgroundColor: color2}" v-on:click="show(col,row)">
+
+                    <span v-if="row==1" class="sort">{{col}}</span>
+                    <span v-if="col==8" class="files">{{files[row-1]}}</span>
+
+                </div>
+                <div v-if="(col+row)%2==1" class="square black-sq" v-bind:style="{ backgroundColor: color}" v-on:click="show(col,row)">
+                    <span v-if="row==1" class="sort">{{col}}</span>
+                    <span v-if="col==8" class="files">{{files[row-1]}}</span>
+
+
+                </div>
+            </div>
+            <br>
+
+        </div>
+        <br>
+        <span>choose color
+            <input type="color"  v-model="color2" class="form-control">
+            <input type="color"  v-model="color"  class="form-control">
+       <br>
+        
+
+    </div>
+    </div>
+
+</body>
+
+<script>
+    const game = {
+        data() {
+            return {
+                rows: [1,2,3,4,5,6,7,8],
+                cols: [1,2,3,4,5,6,7,8],
+                files: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
+                color: "rgb(133, 63, 63)",
+                color2: "#ffffff",
+                letter: 0,
+                number: 0
+                
+
+            }
+        },
+        methods: {
+            show: function(cols, rows) {
+                this.number = cols
+                this.letter = rows
+            }
+        }
+    }
+    Vue.createApp(game).mount('#board');
+</script>
+
+</html>
